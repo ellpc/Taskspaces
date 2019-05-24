@@ -1,0 +1,47 @@
+#Got tired of the repetetive task of opening all the things I needed for 
+#basic network and it management tasks. So I wrote this to make my life easier.
+#@TODO check to see if apps are already open. Git data redacted a bit, but you get the idea.
+#@TODO Add the option to close stuff. 
+
+function get-workspace($task) {
+    if($task -eq $null){
+        Write-Output "You can choose from salesforce, tapes, personal, and tickets."
+        exit
+    }
+
+    if($task -eq "salesforce"){
+        $browser = "chrome.exe"
+        $urls = @("https://trello.com", "https://docs.google.com/spreadsheets", "salesforce.com")
+        $winexplorers = @("C:\things\Salesforce")
+    }
+
+    if($task -eq "tapes"){
+        $browser = "iexplore.exe"
+        $execs = @("mstsc.exe /v:servername", "mstsc.exe /v:servername")
+    }
+
+    if($task -eq "personal"){
+        $browser = "chrome.exe"
+        $urls = @("gmail.com","amazon.com","github.com")
+        $execs = @("skype.exe","C:\Discord\discord.exe","C:\Local\Programs\signal-desktop\Signal.exe")
+    }
+
+    if($task -eq "tickets"){
+        $browser = "chrome.exe"
+        $urls = @("www.url.com")
+    }
+    
+    #open the things
+    Write-Output "Opening $task workspace."
+    foreach ($url in $urls){
+          Start-Process $browser  -ArgumentList $url
+    }
+
+    foreach($winexplorer in $winexplorers){
+      Invoke-Item $winexplorer 
+    }
+
+    foreach($exec in $execs){
+        & $exec
+    }
+}
